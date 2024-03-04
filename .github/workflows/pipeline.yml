@@ -34,9 +34,11 @@ jobs:
       - run: flake8 .
 
 # Ici on commence par reprendre la même chose qu'au-dessus.
+# On précise bien needs avant, signifiant qu'on attend qu'un autre se termine pour exécuter.
 # Exécution des commandes pour la couverture de tests.
   test-and-coverage:
     runs-on: ubuntu-latest
+    needs: linting
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
