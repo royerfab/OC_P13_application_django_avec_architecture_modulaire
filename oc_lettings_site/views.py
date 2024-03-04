@@ -21,5 +21,6 @@ def index(request):
     '''
     return render(request, "index.html")
 
+
 def sentry_debug(request):
     division_by_zero = 1 / 0

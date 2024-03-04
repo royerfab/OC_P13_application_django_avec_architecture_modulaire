@@ -1,0 +1,34 @@
+name: pipeline_letting
+
+
+# on et push indiquent que le pipeline se déclenche lorsqu'on fait un push.
+on:
+  push:
+
+# Déclare les variables d'environnement
+env:
+  SECRET_KEY: ${{ secrets.SECRET_KEY }}
+  DSN: ${{ secrets.DSN }}
+
+# Tâches que le pipeline doit exécuter,
+# ubuntu-latest est le système d'exploitation qu'on utilise,
+# uses pour la version de github action qu'on utilise et la version de python qu'on utilise.
+# create .env file pour créer ici les variables d'environnement.
+# run pour installer flake8, pareil pour setuptools, pareil pour requirements.txt
+# run flake8 pour exécuter flake8
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+      - name: create .env file
+        run: |
+            echo SECRET_KEY=$SECRET_KEY >> .env
+            echo DSN=$DSN >> .env
+      - run: pip install flake8
+      - run: pip install setuptools>=65.5.1 wheel>=0.38.1
+      - run: pip install -r requirements.txt
+      - run: flake8 .
