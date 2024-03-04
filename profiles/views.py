@@ -6,16 +6,16 @@ from .models import Profile
 # faucibus, urna quis auctor pharetra, massa dolor cursus neque, quis dictum lacus d
 
 def index(request):
-    '''
-    Liste tous les objets de Profile.
+    """
+        Renders profiles list page with all Profile objects from the database.
+        Fetches Profiles, places them into context, and serves the rendered view.
 
-    Parameters:
-        request: objet contenant toutes les informations de la requête.
+        :param request: http request object.
+        :type request: object
+        :return: http response with context
+        :rtype: tuple[request, html, dict[list[dict]]
+        """
 
-    Returns:
-        tupple contenant : toutes les informations de la requête, le template de la page html,une liste de  dictionnaire
-        des objets de Profile.
-    '''
     profiles_list = Profile.objects.all()
     context = {"profiles_list": profiles_list}
     return render(request, "profiles/index.html", context)

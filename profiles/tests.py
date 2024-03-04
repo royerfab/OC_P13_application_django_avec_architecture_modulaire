@@ -41,7 +41,7 @@ class ProfilesModelTest(TestCase):
         profile = Profile.objects.first()
         url = reverse('profiles_index')
         self.assertEqual(url, '/profiles/')
-        url = reverse('profile', kwargs={'username' : profile.user})
+        url = reverse('profile', kwargs={'username' : profile.user.username})
         self.assertEqual(url, f'/profiles/{profile.user}/')
 
     def test_profiles_index_view(self):
@@ -53,7 +53,7 @@ class ProfilesModelTest(TestCase):
 
     def test_profiles_profile_view(self):
         profile = Profile.objects.first()
-        url = reverse('profile', kwargs={'username' : profile.user})
+        url = reverse('profile', kwargs={'username' : profile.user.username})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "profiles/profile.html")
