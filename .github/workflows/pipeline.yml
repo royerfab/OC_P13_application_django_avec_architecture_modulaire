@@ -32,3 +32,22 @@ jobs:
       - run: pip install setuptools>=65.5.1 wheel>=0.38.1
       - run: pip install -r requirements.txt
       - run: flake8 .
+
+# Ici on commence par reprendre la même chose qu'au-dessus.
+# Exécution des commandes pour la couverture de tests.
+  test-and-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+      - name: create .env file
+        run: |
+            echo SECRET_KEY=$SECRET_KEY >> .env
+            echo DSN=$DSN >> .env
+      - run: pip install setuptools>=65.5.1 wheel>=0.38.1
+      - run: pip install -r requirements.txt
+      - run: coverage erase
+      - run: coverage run manage.py test
+      - run: coverage report
