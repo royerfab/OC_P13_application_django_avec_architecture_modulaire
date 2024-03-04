@@ -9,6 +9,10 @@ on:
 env:
   SECRET_KEY: ${{ secrets.SECRET_KEY }}
   DSN: ${{ secrets.DSN }}
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
+
 
 # Tâches que le pipeline doit exécuter,
 # ubuntu-latest est le système d'exploitation qu'on utilise,
@@ -53,3 +57,16 @@ jobs:
       - run: coverage erase
       - run: coverage run manage.py test
       - run: coverage report
+
+# Ici on reprend le même début qu'au-dessus, on change le needs.
+# Avec docker login on s'identifie sur docker, on précise qu'on utilise le registry de docker.
+  build-and-push:
+    runs-on: ubuntu-latest
+    needs: test-and-coverage
+    steps:
+      - uses: actions/checkout@v3
+      - name: create .env file
+        run: |
+            echo SECRET_KEY=$SECRET_KEY >> .env
+            echo DSN=$DSN >> .env
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REGISTRY
