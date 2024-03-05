@@ -13,6 +13,7 @@ env:
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
   DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
+  RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
 
 
 # Tâches que le pipeline doit exécuter,
@@ -75,3 +76,12 @@ jobs:
       - run: docker pull $DOCKER_USERNAME/$DOCKER_IMAGE
       - run: docker build -t $DOCKER_USERNAME/$DOCKER_IMAGE:latest .
       - run: docker push $DOCKER_USERNAME/$DOCKER_IMAGE
+
+  deploy-to-render:
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    steps:
+      - uses: actions/checkout@v3
+      - name: execute render hook
+        run: |
+          curl -X GET $RENDER_DEPLOY_HOOK
