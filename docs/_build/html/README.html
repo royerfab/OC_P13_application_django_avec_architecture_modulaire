@@ -78,6 +78,14 @@ l’environnement virtuel, <code class="docutils literal notranslate"><span clas
 <li><p>Pour désactiver l’environnement, <code class="docutils literal notranslate"><span class="pre">deactivate</span></code></p></li>
 </ul>
 </section>
+<section id="variables-denvironnement-virtuel">
+<h3>Variables d’environnement virtuel<a class="headerlink" href="#variables-denvironnement-virtuel" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Créer un fichier <code class="docutils literal notranslate"><span class="pre">.env</span></code> et ajouter le contenu de <code class="docutils literal notranslate"><span class="pre">.env.exemple</span></code></p></li>
+<li><p>Ajouter les valeurs des variables correspondantes dans le fichier
+<code class="docutils literal notranslate"><span class="pre">.env</span></code></p></li>
+</ul>
+</section>
 <section id="executer-le-site">
 <h3>Exécuter le site<a class="headerlink" href="#executer-le-site" title="Link to this heading">¶</a></h3>
 <ul class="simple">
@@ -138,6 +146,54 @@ l’environnement virtuel, <code class="docutils literal notranslate"><span clas
 <code class="docutils literal notranslate"><span class="pre">(Get-Command</span> <span class="pre">&lt;my-command&gt;).Path</span></code></p></li>
 </ul>
 </section>
+<section id="docker">
+<h2>Docker<a class="headerlink" href="#docker" title="Link to this heading">¶</a></h2>
+<p>Utiliser Docker pour lancer l’application en local :</p>
+<ul class="simple">
+<li><p>Installer Docker desktop ou Docker sur votre machine
+<a class="reference external" href="https://www.docker.com/">https://www.docker.com/</a></p></li>
+<li><p>Faire un pull de l’image de l’application,
+<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">pull</span> <span class="pre">fabroyer/lettings</span></code></p></li>
+<li><p>Lancer l’image Docker <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-p</span> <span class="pre">8000:8000</span> <span class="pre">fabroyer/lettings</span></code></p></li>
+<li><p>Aller sur <a class="reference external" href="http://localhost:8000">http://localhost:8000</a></p></li>
+</ul>
+</section>
+</section>
+<section id="deploiement">
+<h1>Déploiement<a class="headerlink" href="#deploiement" title="Link to this heading">¶</a></h1>
+<p>Le déploiement se fait automatiquement à partir du pipeline CI/CD de
+Github Actions. Ce projet a utilisé render. Les étapes à suivre sont les
+suivantes : - Depuis Github, ajouter les variables d’environnement
+suivantes :</p>
+<ul class="simple">
+<li><p>SECRET_KEY: la secret_key du projet.</p></li>
+<li><p>DSN: le dsn Sentry.</p></li>
+<li><p>DOCKER_USERNAME: l’username de Dockerhub.</p></li>
+<li><p>DOCKER_PASSWORD: le password de Dockerhub.</p></li>
+<li><p>DOCKER_REGISTRY: le registry de Dockerhub.</p></li>
+<li><p>DOCKER_IMAGE: le nom de l’image de Docker.</p></li>
+<li><p>RENDER_DEPLOY_HOOK: l’url du hook de Render.</p></li>
+<li><p>Aller sur <code class="docutils literal notranslate"><span class="pre">https://render.com</span></code> et créer un compte.</p></li>
+<li><p>Ensuite créer un service, utiliser <code class="docutils literal notranslate"><span class="pre">web</span> <span class="pre">service</span></code>.</p></li>
+<li><p>Choisir <code class="docutils literal notranslate"><span class="pre">Deploy</span> <span class="pre">an</span> <span class="pre">existing</span> <span class="pre">image</span> <span class="pre">from</span> <span class="pre">a</span> <span class="pre">registry</span></code></p></li>
+<li><p>Ajouter l’url de l’image Docker.</p></li>
+<li><p>Ajouter les variables d’environnement.</p></li>
+<li><p>Le déploiement s’exécute après chaque commit sur la branche
+principale.</p></li>
+</ul>
+</section>
+<section id="technologies-et-langages-utilises">
+<h1>Technologies et langages utilisés<a class="headerlink" href="#technologies-et-langages-utilises" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p>Python 3.12.5</p></li>
+<li><p>Django 3.0</p></li>
+<li><p>Docker</p></li>
+<li><p>Render</p></li>
+<li><p>Git</p></li>
+<li><p>Github Actions</p></li>
+<li><p>Readthedocs</p></li>
+<li><p>Sphinx</p></li>
+</ul>
 </section>
 
 
@@ -164,8 +220,11 @@ l’environnement virtuel, <code class="docutils literal notranslate"><span clas
 <li class="toctree-l2"><a class="reference internal" href="#prerequis">Prérequis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#macos-linux">macOS / Linux</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#windows">Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#docker">Docker</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="#deploiement">Déploiement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#technologies-et-langages-utilises">Technologies et langages utilisés</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">OC_P13_application_django_avec_architecture_modulaire</a></li>
 </ul>
 

@@ -44,6 +44,13 @@ Créer l’environnement virtuel
    l’environnement virtuel, ``which pip``
 -  Pour désactiver l’environnement, ``deactivate``
 
+Variables d’environnement virtuel
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+-  Créer un fichier ``.env`` et ajouter le contenu de ``.env.exemple``
+-  Ajouter les valeurs des variables correspondantes dans le fichier
+   ``.env``
+
 Exécuter le site
 ^^^^^^^^^^^^^^^^
 
@@ -97,3 +104,62 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 -  Pour activer l’environnement virtuel, ``.\venv\Scripts\Activate.ps1``
 -  Remplacer ``which <my-command>`` par
    ``(Get-Command <my-command>).Path``
+
+Docker
+~~~~~~
+
+Utiliser Docker pour lancer l’application en local :
+
+-  Installer Docker desktop ou Docker sur votre machine
+   https://www.docker.com/
+-  Faire un pull de l’image de l’application,
+   ``docker pull fabroyer/lettings``
+-  Lancer l’image Docker ``docker run -p 8000:8000 fabroyer/lettings``
+-  Aller sur http://localhost:8000
+
+Déploiement
+-----------
+
+Le déploiement se fait automatiquement à partir du pipeline CI/CD de
+Github Actions. Ce projet a utilisé render. Les étapes à suivre sont les
+suivantes : - Depuis Github, ajouter les variables d’environnement
+suivantes :
+
+-  SECRET_KEY: la secret_key du projet.
+
+-  DSN: le dsn Sentry.
+
+-  DOCKER_USERNAME: l’username de Dockerhub.
+
+-  DOCKER_PASSWORD: le password de Dockerhub.
+
+-  DOCKER_REGISTRY: le registry de Dockerhub.
+
+-  DOCKER_IMAGE: le nom de l’image de Docker.
+
+-  RENDER_DEPLOY_HOOK: l’url du hook de Render.
+
+-  Aller sur ``https://render.com`` et créer un compte.
+
+-  Ensuite créer un service, utiliser ``web service``.
+
+-  Choisir ``Deploy an existing image from a registry``
+
+-  Ajouter l’url de l’image Docker.
+
+-  Ajouter les variables d’environnement.
+
+-  Le déploiement s’exécute après chaque commit sur la branche
+   principale.
+
+Technologies et langages utilisés
+---------------------------------
+
+-  Python 3.12.5
+-  Django 3.0
+-  Docker
+-  Render
+-  Git
+-  Github Actions
+-  Readthedocs
+-  Sphinx
