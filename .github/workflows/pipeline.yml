@@ -82,7 +82,7 @@ jobs:
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REGISTRY
       - run: docker pull $DOCKER_USERNAME/$DOCKER_IMAGE
       - run: docker build -t $DOCKER_USERNAME/$DOCKER_IMAGE:$GITHUB_SHA .
-      - run: docker push $DOCKER_USERNAME/$DOCKER_IMAGE
+      - run: docker push $DOCKER_USERNAME/$DOCKER_IMAGE:$GITHUB_SHA
 
 # Ici on active render.
   deploy-to-render:
