@@ -69,6 +69,8 @@ jobs:
 # Avec le if on précise que le job s'exécute que sur la branche main
 # Avec docker login on s'identifie sur docker, on précise qu'on utilise le registry de docker.
 # Ici avec les autres docker on retire les infos de Dockerhub, on construit une image et on remet le tout sur Dockerhub.
+# On build deux images, celle avec le SHA est nouvelle à chaque fois et celle avec latest s'écrase
+# On en push une seule avec les deux tags.
   build-and-push:
     runs-on: ubuntu-latest
     needs: test-and-coverage
@@ -80,9 +82,9 @@ jobs:
             echo SECRET_KEY=$SECRET_KEY >> .env
             echo DSN=$DSN >> .env
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REGISTRY
-      - run: docker pull $DOCKER_USERNAME/$DOCKER_IMAGE
-      - run: docker build -t $DOCKER_USERNAME/$DOCKER_IMAGE:$GITHUB_SHA .
-      - run: docker push $DOCKER_USERNAME/$DOCKER_IMAGE:$GITHUB_SHA
+      # - run: docker pull $DOCKER_USERNAME/$DOCKER_IMAGE
+      - run: docker build -t $DOCKER_USERNAME/$DOCKER_IMAGE:$GITHUB_SHA -t $DOCKER_USERNAME/$DOCKER_IMAGE:latest .
+      - run: docker push --all-tags $DOCKER_USERNAME/$DOCKER_IMAGE
 
 # Ici on active render.
   deploy-to-render:
