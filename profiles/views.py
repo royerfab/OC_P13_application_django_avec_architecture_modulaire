@@ -26,9 +26,6 @@ def index(request):
 # Sed tincidunt, dolor id facilisis fringilla, eros leo tristique lacus,
 # it. Nam aliquam dignissim congue. Pellentesque habitant morbi tristique senectus et netus et males
 
-
-
-
 def profile(request, username):
     '''
     Renvoie les informations d'une instance de Profile.
